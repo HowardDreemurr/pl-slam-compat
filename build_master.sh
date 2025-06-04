@@ -40,6 +40,7 @@ bash build.sh
 cd ..
 
 echo "Building PL-SLAM (Initial Commit)..."
+cd ..
 bash build.sh
 
 echo "[PL-SLAM] INSTALL SUCCESSFUL"
