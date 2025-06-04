@@ -130,10 +130,8 @@ public:
   }
 
   /** Applies translation to vector */
-  template<typename Derived>
-  inline typename internal::enable_if<Derived::IsVectorAtCompileTime,VectorType>::type
-  operator* (const MatrixBase<Derived>& vec) const
-  { return m_coeffs + vec.derived(); }
+  inline VectorType operator* (const VectorType& other) const
+  { return m_coeffs + other; }
 
   /** \returns the inverse translation (opposite) */
   Translation inverse() const { return Translation(-m_coeffs); }
@@ -164,7 +162,7 @@ public:
     * determined by \a prec.
     *
     * \sa MatrixBase::isApprox() */
-  bool isApprox(const Translation& other, const typename NumTraits<Scalar>::Real& prec = NumTraits<Scalar>::dummy_precision()) const
+  bool isApprox(const Translation& other, typename NumTraits<Scalar>::Real prec = NumTraits<Scalar>::dummy_precision()) const
   { return m_coeffs.isApprox(other.m_coeffs, prec); }
 
 };

@@ -75,6 +75,16 @@ Config::Config()
     pl_in_parallel     = true;      // true if detecting points and line segments in parallel
     best_lr_matches    = true;      // true if double-checking the matches between the two images
     adaptative_fast    = true;      // true if using adaptative fast_threshold
+    
+    const char* env_points = std::getenv("PLSLAM_NO_POINTS");
+    if (env_points) {
+        has_points = std::string(env_points) != "1";
+    }
+
+    const char* env_lines = std::getenv("PLSLAM_NO_LINES");
+    if (env_lines) {
+        has_lines = std::string(env_lines) != "1";
+    }
 
     // Tracking parameters
     // -----------------------------------------------------------------------------------------------------

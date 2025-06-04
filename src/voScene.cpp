@@ -556,7 +556,7 @@ bool voScene::updateScene( list<PointFeature*> matched_pt ){
         v_auxgt(2) = -y_;
         v_auxgt(4) = -c_;
         v_auxgt(5) =  b_;
-        pose_gt = TPose3D(v_auxgt(0),v_auxgt(1),v_auxgt(2),v_auxgt(3),v_auxgt(4),v_auxgt(5));
+        pose_gt = CPose3D(v_auxgt(0),v_auxgt(1),v_auxgt(2),v_auxgt(3),v_auxgt(4),v_auxgt(5));
 
         if(hasTraj){
             opengl::CSimpleLinePtr obj = opengl::CSimpleLine::Create();

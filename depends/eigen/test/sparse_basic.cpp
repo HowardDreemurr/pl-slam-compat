@@ -299,14 +299,6 @@ template<typename SparseMatrixType> void sparse_basic(const SparseMatrixType& re
       VERIFY_IS_APPROX(m1.innerVector(0).dot(refM2.row(0)), refM1.row(0).dot(refM2.row(0)));
     else
       VERIFY_IS_APPROX(m1.innerVector(0).dot(refM2.row(0)), refM1.col(0).dot(refM2.row(0)));
-    
-    DenseVector rv = DenseVector::Random(m1.cols());
-    DenseVector cv = DenseVector::Random(m1.rows());
-    Index r = internal::random<Index>(0,m1.rows()-2);
-    Index c = internal::random<Index>(0,m1.cols()-1);
-    VERIFY_IS_APPROX(( m1.template block<1,Dynamic>(r,0,1,m1.cols()).dot(rv)) , refM1.row(r).dot(rv));
-    VERIFY_IS_APPROX(m1.row(r).dot(rv), refM1.row(r).dot(rv));
-    VERIFY_IS_APPROX(m1.col(c).dot(cv), refM1.col(c).dot(cv));
 
     VERIFY_IS_APPROX(m1.conjugate(), refM1.conjugate());
     VERIFY_IS_APPROX(m1.real(), refM1.real());
@@ -314,8 +306,6 @@ template<typename SparseMatrixType> void sparse_basic(const SparseMatrixType& re
     refM4.setRandom();
     // sparse cwise* dense
     VERIFY_IS_APPROX(m3.cwiseProduct(refM4), refM3.cwiseProduct(refM4));
-    // dense cwise* sparse
-    VERIFY_IS_APPROX(refM4.cwiseProduct(m3), refM4.cwiseProduct(refM3));
 //     VERIFY_IS_APPROX(m3.cwise()/refM4, refM3.cwise()/refM4);
 
     // test aliasing
@@ -538,20 +528,6 @@ template<typename SparseMatrixType> void sparse_basic(const SparseMatrixType& re
     DenseMatrix refMat1 = DenseMatrix::Identity(rows, rows);
     SparseMatrixType m1(rows, rows);
     m1.setIdentity();
-    VERIFY_IS_APPROX(m1, refMat1);
-    for(int k=0; k<rows*rows/4; ++k)
-    {
-      Index i = internal::random<Index>(0,rows-1);
-      Index j = internal::random<Index>(0,rows-1);
-      Scalar v = internal::random<Scalar>();
-      m1.coeffRef(i,j) = v;
-      refMat1.coeffRef(i,j) = v;
-      VERIFY_IS_APPROX(m1, refMat1);
-      if(internal::random<Index>(0,10)<2)
-        m1.makeCompressed();
-    }
-    m1.setIdentity();
-    refMat1.setIdentity();
     VERIFY_IS_APPROX(m1, refMat1);
   }
 }

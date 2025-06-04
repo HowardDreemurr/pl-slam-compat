@@ -2,7 +2,20 @@ project( StVO-PL )
 
 cmake_minimum_required(VERSION 2.7)
 find_package( OpenCV 3 REQUIRED)
-find_package(Boost REQUIRED COMPONENTS thread system filesystem)	
+include_directories(${OpenCV_INCLUDE_DIRS})
+find_package(Boost REQUIRED COMPONENTS thread system filesystem)
+
+find_path(EIGEN3_INCLUDE_DIR Eigen/Core
+  PATHS
+    ${CMAKE_PREFIX_PATH}
+    ${PROJECT_SOURCE_DIR}/../eigen
+)
+
+if(EIGEN3_INCLUDE_DIR)
+  include_directories(${EIGEN3_INCLUDE_DIR})
+else()
+  message(FATAL_ERROR "Eigen3 include directory not found!")
+endif()
 
 if(COMMAND cmake_policy)
   	cmake_policy(SET CMP0003 NEW)	

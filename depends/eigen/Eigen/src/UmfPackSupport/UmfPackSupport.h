@@ -148,8 +148,7 @@ class UmfPackLU : internal::noncopyable
 
     UmfPackLU() { init(); }
 
-    template<typename InputMatrixType>
-    UmfPackLU(const InputMatrixType& matrix)
+    UmfPackLU(const MatrixType& matrix)
     {
       init();
       compute(matrix);
