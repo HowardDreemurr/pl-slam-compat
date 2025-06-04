@@ -1,3 +1,140 @@
+# PL-SLAM-Compat
+
+A dependencies-included, ready-to-run version of the original [PL-SLAM](https://github.com/rubengooj/pl-slam) at commit `6b20b0c`.
+
+This repository integrates all core dependencies (Eigen 3.2.5, OpenCV 3.4.1, G2O, MRPT, and StVO-PL) with pre-configured build scripts, making PL-SLAM easy to compile and run on modern Ubuntu systems.
+
+---
+
+## 📦 Features
+
+- ✅ Dependencies bugs fixed
+- ✅ All core dependencies are bundled and built automatically  
+- ✅ Single command build via `build_master.sh`  
+- ✅ **No need to modify code to switch between P-SLAM / L-SLAM / PL-SLAM**  
+
+---
+
+## 🚀 Quick Start
+
+### 1. Install system dependencies
+
+Make sure you're on Ubuntu (20.04+ or WSL2 recommended, tested 04 June 2025), then run:
+
+```bash
+sudo apt update && sudo apt install -y \
+  build-essential cmake git pkg-config \
+  libboost-all-dev libsuitesparse-dev \
+  libyaml-cpp-dev libglew-dev libgl1-mesa-dev libegl1-mesa-dev \
+  libxkbcommon-dev libglfw3-dev libpython3-dev libpython2.7-dev \
+  libjpeg-dev libpng-dev libtiff-dev libavcodec-dev \
+  libavformat-dev libswscale-dev libgtk2.0-dev \
+  qt5-default libqglviewer-dev-qt5 python2 libassimp-dev \
+  libwxgtk3.0-gtk3-dev freeglut3-dev python-numpy
+```
+
+### 2. Build all components
+
+In the project root:
+
+```bash
+bash build_master.sh
+```
+
+> 💡 If any part fails, go to `depends/<module>/` and run `bash build.sh` manually to debug.
+
+---
+
+## ⚙️ Runtime Feature Control (No Recompilation)
+
+To disable points or lines **at runtime**, export these variables before launching:
+
+```bash
+export PLSAM_NO_POINTS=1   # Disable point features
+export PLSAM_NO_LINES=1    # Disable line features
+```
+
+No need to modify `config.cpp` or recompile — switch modes on the fly!
+
+---
+
+## 🗂️ Dataset Setup
+
+### 1. Export your dataset root path
+
+```bash
+export DATASETS_DIR=/your/path/to/dataset
+```
+
+### 2. Copy the appropriate config YAML
+
+For example, if you're using KITTI sequence 00:
+
+```bash
+cp config/kitti.yaml $DATASETS_DIR/kitti/00/dataset_params.yaml
+```
+
+### 3. Set the runtime library path (Build_master.sh included)
+
+```bash
+export LD_LIBRARY_PATH=$HOME/pl-slam/installs/lib
+```
+
+---
+
+## ▶️ Running
+
+From the `build/` directory:
+
+```bash
+./plslam_dataset kitti/00           # Run SLAM only
+./plstvo_dataset kitti/00           # Run SLAM + Trajectory Evaluation (GT required)
+```
+
+---
+
+## 📤 Output
+
+By default, PL-SLAM does **not output trajectory** to file.
+
+To save poses (e.g., TUM format), you can manually add output logic in `plslam_dataset.cpp` or implement a `SaveTrajectoryTUM()` method inside the `PL_SLAM` class.
+
+---
+
+## 📁 Directory Structure
+
+```
+PL-SLAM-Compat/
+├── build_master.sh        # Master build script
+├── build/                 # Final executables
+├── depends/               # All third-party sources and build.sh scripts
+│   ├── eigen/
+│   ├── opencv/
+│   ├── g2o/
+│   ├── mrpt/
+│   └── stvo-pl/
+├── config/                # Dataset YAMLs
+├── installs/              # Install prefix for built libraries
+└── ...
+```
+
+---
+
+## 🧩 Compatibility
+
+- Ubuntu 20.04 / 22.04 / WSL2 tested  
+- Requires ~5GB free disk space (More required for datasets) 
+- Recommended: 4+ cores and 8GB RAM  
+
+---
+
+## 📜 License
+
+This project follows the original [GPLv3 License](https://www.gnu.org/licenses/gpl-3.0.html).  
+All dependencies and subcomponents retain their original licenses.
+
+
+
 # PL-SLAM #
 
 This code contains an algorithm to compute stereo visual SLAM by using both point and line segment features.
