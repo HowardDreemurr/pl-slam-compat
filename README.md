@@ -17,9 +17,13 @@ This repository integrates all core dependencies (Eigen 3.2.5, OpenCV 3.4.1, G2O
 
 ## 🚀 Quick Start
 
-### 1. Install system dependencies
+### 0. Just run build_master.sh
 
-Make sure you're on Ubuntu (20.04+ or WSL2 recommended, tested 04 June 2025), then run:
+Make sure you're on Ubuntu 20.04 LTS (Other version may have env problems, tested 04 June 2025)
+
+### 1. Install system dependencies (build_master.sh included)
+
+Run the command:
 
 ```bash
 sudo apt update && sudo apt install -y \
@@ -122,7 +126,7 @@ PL-SLAM-Compat/
 
 ## 🧩 Compatibility
 
-- Ubuntu 20.04 / 22.04 / WSL2 tested  
+- Ubuntu 20.04 LTS on WSL2 tested  
 - Requires ~5GB free disk space (More required for datasets) 
 - Recommended: 4+ cores and 8GB RAM  
 
