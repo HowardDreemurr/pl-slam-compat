@@ -78,6 +78,8 @@ For example, if you're using KITTI sequence 00:
 cp config/kitti.yaml $DATASETS_DIR/kitti/00/dataset_params.yaml
 ```
 
+You need to rename the .YAML to "dataset_params.yaml"!
+
 ### 3. Set the runtime library path (Build_master.sh included)
 
 ```bash
